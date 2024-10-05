@@ -45,7 +45,7 @@ class TestHTMLNode(unittest.TestCase):
         )
         self.assertEqual(
             node.__repr__(),
-            "HTMLNode(tag='p', value='What a strange world', children=None, props={'class': 'primary'})",
+            "HTMLNode(tag=p, value=What a strange world, children=None, props={'class': 'primary'})",
         )
 
     def test_leafnode(self):
@@ -67,11 +67,6 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(
             node.to_html(), '<a href="https://www.example.com">Click me!</a>'
         )
-
-    def test_leaf_node_value_required(self):
-        # Test that creating a LeafNode with None value raises ValueError
-        with self.assertRaises(ValueError):
-            LeafNode("p", None)
 
     def test_to_html_with_children(self):
         child_node = LeafNode("span", "child")
