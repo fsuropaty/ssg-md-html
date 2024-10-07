@@ -1,32 +1,23 @@
 import os
 import shutil
 
+from markdown_utils import copy_static, generate_page_recursive
 
-def copy_static(source, target):
-    if not os.path.exists(target):
-        print("make directory :", target)
-        os.mkdir(target)
-
-    for file in os.listdir(source):
-        spath = os.path.join(source, file)
-        tpath = os.path.join(target, file)
-
-        if os.path.isfile(spath):
-            print(f"copying file from {spath} to {tpath}")
-            shutil.copy(spath, tpath)
-        else:
-            copy_static(spath, tpath)
+dir_source = "./static"
+dir_target = "./public"
+dir_gen_source = "./content"
+dir_templ = "./template.html"
+dir_dest_path = "./public"
 
 
 def main():
 
-    source = "static"
-    target = "public"
+    if os.path.exists(dir_target):
+        shutil.rmtree(dir_target)
 
-    if os.path.exists(target):
-        shutil.rmtree(target)
+    copy_static(dir_source, dir_target)
 
-    copy_static(source, target)
+    generate_page_recursive(dir_gen_source, dir_templ, dir_dest_path)
 
 
 main()

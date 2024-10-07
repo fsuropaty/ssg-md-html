@@ -22,20 +22,7 @@ def text_to_textnodes(text):
     return nodes
 
 
-def extract_markdown_images(text):
-    result = re.findall(r"!\[(.*?)\]\((.*?)\)", text)
-
-    return result
-
-
-def extract_markdown_links(text):
-    result = re.findall(r"(?<!!)\[(.*?)\]\((.*?)\)", text)
-
-    return result
-
-
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
-
     new_nodes = []
 
     for old_node in old_nodes:
@@ -47,6 +34,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
         parts = old_node.text.split(delimiter)
 
         if len(parts) % 2 == 0:
+            print(old_node)
             raise ValueError("Invalid markdown, formatted section not closed")
 
         for i in range(len(parts)):
@@ -120,3 +108,15 @@ def split_nodes_images(old_nodes):
             new_nodes.append(TextNode(old_node.text, text_type_text))
 
     return new_nodes
+
+
+def extract_markdown_images(text):
+    result = re.findall(r"!\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+    return result
+
+
+def extract_markdown_links(text):
+    result = re.findall(r"(?<!!)\[([^\[\]]*)\]\(([^\(\)]*)\)", text)
+
+    return result
